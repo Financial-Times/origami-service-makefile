@@ -8,6 +8,10 @@ dependencies:
     - npm prune --production=false && npm install --no-spin --no-progress
     - echo "//registry.npmjs.org/:_authToken=${NPM_AUTH_TOKEN}" > ${HOME}/.npmrc
 
+test:
+  override:
+    - echo "Nothing to see here yet!"
+
 deployment:
   release:
     tag: /v.*/
