@@ -27,6 +27,12 @@ Origami Service Makefile provides a set of common tools that are required for bu
 curl https://raw.githubusercontent.com/Financial-Times/origami-service-makefile/master/boilerplate.mk > Makefile
 ```
 
+Now install this module and save it to your `package.json` file:
+
+```sh
+npm install --save @financial-times/origami-service-makefile
+```
+
 You should now be able to run the following commands:
 
 ```
