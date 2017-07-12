@@ -118,7 +118,7 @@ test-unit-coverage:
 
 # Run the integration tests using mocha
 test-integration:
-	@if [ -d test/integration ]; then mocha test/integration --timeout $(INTEGRATION_TIMEOUT) --slow $(INTEGRATION_SLOW) $(INTEGRATION_FLAGS) && $(TASK_DONE); fi
+	@if [ -d test/integration ]; then mocha test/integration --recursive --timeout $(INTEGRATION_TIMEOUT) --slow $(INTEGRATION_SLOW) $(INTEGRATION_FLAGS) && $(TASK_DONE); fi
 
 
 # Service running tasks
