@@ -258,7 +258,7 @@ grafana-checks:
 # -----------------
 
 # Verify security and licensing of production dependencies
-whitesource:
+whitesource: $(NPM_BIN)/whitesource
 	@if [ -z "$(WHITESOURCE_API_KEY)" ]; then \
 		echo "Warning: WHITESOURCE_API_KEY is not set, not running whitesource"; \
 	else \
@@ -266,3 +266,9 @@ whitesource:
 		whitesource run; \
 		rm whitesource.config.json; \
 	fi
+
+# Install the whitesource node module if it isn't
+# already. This may happen on Heroku if development
+# dependencies aren't installed
+$(NPM_BIN)/whitesource:
+	@npm install whitesource
