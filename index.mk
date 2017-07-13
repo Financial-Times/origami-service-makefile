@@ -149,7 +149,9 @@ deploy:
 # Perform the tasks necessary before triggering
 # a release. To be used in Heroku release stages
 release: release-log
-ifneq ($(REGION), QA)
+ifeq ($(REGION), QA)
+	@make whitesource
+else
 	@make cmdb-update
 endif
 	@$(DONE)
@@ -250,3 +252,17 @@ grafana-push: grafana-checks
 grafana-checks:
 	@if [ -z "$(GRAFANA_API_KEY)" ]; then echo "Error: GRAFANA_API_KEY is not set" && exit 1; fi
 	@if [ -z "$(GRAFANA_DASHBOARD)" ]; then echo "Error: GRAFANA_DASHBOARD is not set" && exit 1; fi
+
+
+# Whitesource tasks
+# -----------------
+
+# Verify security and licensing of production dependencies
+whitesource:
+	@if [ -z "$(WHITESOURCE_API_KEY)" ]; then \
+		echo "Warning: WHITESOURCE_API_KEY is not set, not running whitesource"; \
+	else \
+		echo '{"apiKey": "$(WHITESOURCE_API_KEY)"}' > whitesource.config.json; \
+		whitesource run; \
+		rm whitesource.config.json; \
+	fi
