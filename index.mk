@@ -262,7 +262,7 @@ whitesource: $(NPM_BIN)/whitesource
 	@if [ -z "$(WHITESOURCE_API_KEY)" ]; then \
 		echo "Warning: WHITESOURCE_API_KEY is not set, not running whitesource"; \
 	else \
-		echo '{"apiKey": "$(WHITESOURCE_API_KEY)"}' > whitesource.config.json; \
+		echo '{"apiKey": "$(WHITESOURCE_API_KEY)", "checkPolicies":true, "devDep": true, "failOnError": true}' > whitesource.config.json; \
 		whitesource run; \
 		rm whitesource.config.json; \
 	fi
