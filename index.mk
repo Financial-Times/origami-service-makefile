@@ -209,8 +209,8 @@ cmdb-checks:
 
 # Create a release log in Salesforce for the service
 # TODO: work out how we can use origami.support@ft.com as an owner email
-release-log: release-log-checks $(NPM_BIN)/release-log
-	@release-log \
+release-log: release-log-checks
+	@npx -p @financial-times/release-log@^1 release-log \
 		--environment "$(RELEASE_LOG_ENVIRONMENT)" \
 		--api-key "$(RELEASE_LOG_API_KEY)" \
 		--summary "Releasing $(SERVICE_NAME) to $(RELEASE_LOG_ENVIRONMENT) ($(REGION))" \
@@ -228,12 +228,6 @@ release-log-checks:
 	@if [ -z "$(SERVICE_NAME)" ]; then echo "Error: SERVICE_NAME is not set" && exit 1; fi
 	@if [ -z "$(SERVICE_SALESFORCE_ID)" ]; then echo "Error: SERVICE_SALESFORCE_ID is not set" && exit 1; fi
 	@if [ -z "$(REGION)" ]; then echo "Error: REGION is not set" && exit 1; fi
-
-# Install the release-log node module if it isn't
-# already. This may happen on Heroku if development
-# dependencies aren't installed
-$(NPM_BIN)/release-log:
-	@npm install @financial-times/release-log
 
 
 # Monitoring tasks
@@ -258,17 +252,11 @@ grafana-checks:
 # -----------------
 
 # Verify security and licensing of production dependencies
-whitesource: $(NPM_BIN)/whitesource
+whitesource:
 	@if [ -z "$(WHITESOURCE_API_KEY)" ]; then \
 		echo "Warning: WHITESOURCE_API_KEY is not set, not running whitesource"; \
 	else \
 		echo '{"apiKey": "$(WHITESOURCE_API_KEY)", "checkPolicies":true, "devDep": true, "failOnError": true}' > whitesource.config.json; \
-		whitesource run; \
+		npx -p whitesource@^1 whitesource run; \
 		rm whitesource.config.json; \
 	fi
-
-# Install the whitesource node module if it isn't
-# already. This may happen on Heroku if development
-# dependencies aren't installed
-$(NPM_BIN)/whitesource:
-	@npm install whitesource
