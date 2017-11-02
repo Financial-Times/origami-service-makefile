@@ -30,7 +30,7 @@ TASK_DONE = echo "✓ $@ done"
 # -----------
 
 all: install ci
-ci: verify test
+ci: verify test whitesource
 
 
 # Install tasks
@@ -149,9 +149,7 @@ deploy:
 # Perform the tasks necessary before triggering
 # a release. To be used in Heroku release stages
 release: release-log
-ifeq ($(REGION), QA)
-	@make whitesource
-else
+ifneq ($(REGION), QA)
 	@make cmdb-update
 endif
 	@$(DONE)
