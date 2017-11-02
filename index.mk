@@ -30,7 +30,7 @@ TASK_DONE = echo "✓ $@ done"
 # -----------
 
 all: install ci
-ci: verify test
+ci: verify test whitesource
 
 
 # Install tasks
@@ -149,9 +149,7 @@ deploy:
 # Perform the tasks necessary before triggering
 # a release. To be used in Heroku release stages
 release: release-log
-ifeq ($(REGION), QA)
-	@make whitesource
-else
+ifneq ($(REGION), QA)
 	@make cmdb-update
 endif
 	@$(DONE)
@@ -253,10 +251,8 @@ grafana-checks:
 
 # Verify security and licensing of production dependencies
 whitesource:
-	@if [ -z "$(WHITESOURCE_API_KEY)" ]; then \
-		echo "Warning: WHITESOURCE_API_KEY is not set, not running whitesource"; \
+	@if [ -f "$(whitesource.config.json)" ]; then \
+		echo "Warning: whitesource.config.json file not found, skipping running whitesource"; \
 	else \
-		echo '{"apiKey": "$(WHITESOURCE_API_KEY)", "checkPolicies":true, "devDep": true, "failOnError": true}' > whitesource.config.json; \
 		npx -p whitesource@^1 whitesource run; \
-		rm whitesource.config.json; \
 	fi
