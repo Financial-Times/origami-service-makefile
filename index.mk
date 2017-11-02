@@ -253,10 +253,8 @@ grafana-checks:
 
 # Verify security and licensing of production dependencies
 whitesource:
-	@if [ -z "$(WHITESOURCE_API_KEY)" ]; then \
-		echo "Warning: WHITESOURCE_API_KEY is not set, not running whitesource"; \
+	@if [ -f "$(whitesource.config.json)" ]; then \
+		echo "Warning: whitesource.config.json file not found, skipping running whitesource"; \
 	else \
-		echo '{"apiKey": "$(WHITESOURCE_API_KEY)", "checkPolicies":true, "devDep": true, "failOnError": true}' > whitesource.config.json; \
 		npx -p whitesource@^1 whitesource run; \
-		rm whitesource.config.json; \
 	fi
