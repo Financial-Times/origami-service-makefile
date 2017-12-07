@@ -44,6 +44,7 @@ make run-dev       # Run the application and restart when files change
 make deploy        # Deploy the application to QA
 make release       # Run required tasks before a release goes live
 make promote       # Promote a QA deploy to production
+make auto-version  # Auto-version the repo and create a GitHub release
 make cmdb-update   # Update CMDB endpoints for the application
 make release-log   # Create a release log for the application in Salesforce
 make grafana-pull  # Pull changes from the Grafana dashboard
@@ -74,6 +75,7 @@ These configurations are safe to include in your extending `Makefile`, and _shou
   - `REGION`: The region the application is running in, used in release logs and determining which release tasks are required. One of `QA`, `EU`, or `US`
   - `RELEASE_LOG_ENVIRONMENT`: The Salesforce environment to include in release logs. One of `Test` or `Production`
   - `GRAFANA_DASHBOARD`: The Grafana dashboard ID for the application
+  - `GITHUB_RELEASE_REPO`: The GitHub repository in `owner/name` format. This is used for auto-versioning
 
 ### Private Configurations
 
@@ -83,6 +85,8 @@ These configurations must never appear in your source code, and so should be set
   - `RELEASE_LOG_API_KEY`: The change request API key to use when creating and closing release logs
   - `GRAFANA_API_KEY`: The API key to use when performing Grafana operations
   - `WHITESOURCE_API_KEY`: The API key to use when testing dependencies with Whitesource
+  - `GITHUB_RELEASE_USER`: The user who will create releases on GitHub for repositories which use the auto-version task. This user must have write access to `GITHUB_RELEASE_REPO`
+  - `GITHUB_RELEASE_TOKEN`: A token for `GITHUB_RELEASE_USER` which has `repo` level access
 
 
 Contact
