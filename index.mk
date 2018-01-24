@@ -60,7 +60,7 @@ node_modules: package.json
 export EXPECTED_COVERAGE := 90
 
 # Run all of the verify tasks
-verify: verify-javascript
+verify: verify-javascript verify-coverage
 	@$(TASK_DONE)
 
 # Run all of the JavaScript verification tasks
