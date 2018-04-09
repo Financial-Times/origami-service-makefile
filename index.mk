@@ -42,7 +42,7 @@ ci: verify test whitesource
 	@if [[ -z "$(shell command -v vault)" ]]; then echo "Error: You don't have Vault installed. Follow the guide at https://github.com/Financial-Times/vault/wiki/Getting-Started"; exit 1; fi
 	@if [[ -z "$(shell find ~/.vault-token -mmin -480)" ]]; then echo "Error: You are not logged into Vault. Try vault auth --method github."; exit 1; fi
 	@if [[ -z "$(shell grep .env .gitignore)" ]]; then echo "Error: .gitignore must include .env"; exit 1; fi
-	@SERVICE_SYSTEM_CODE=$(SERVICE_SYSTEM_CODE) node vault.js
+	@SERVICE_SYSTEM_CODE=$(SERVICE_SYSTEM_CODE) REGION=$(REGION) node vault.js
 	@$(TASK_DONE)
 
 # Clean the Git repository
