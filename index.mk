@@ -10,7 +10,6 @@
 
 # Import environment variables if an .env file is present
 ifneq ("$(wildcard .env)","")
-sinclude .env
 export $(shell [ -f .env ] && sed 's/=.*//' .env)
 $(info Note: importing environment variables from .env file)
 endif
