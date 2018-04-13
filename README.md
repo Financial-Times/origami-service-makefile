@@ -39,7 +39,7 @@ You should now be able to run the following commands:
 
 ```
 make install       # Install application dependencies
-make .env          # Update the .env file with enviroment variables from Vault
+make .env          # Update the .env file with environment variables from Vault
 make verify        # Verify code using static analysis
 make test          # Run unit and integration tests
 make run           # Run the application as if in production
