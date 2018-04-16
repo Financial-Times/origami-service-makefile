@@ -21,6 +21,8 @@ Table Of Contents
 Usage
 -----
 
+The Origami Service Makefile requires [Node.js] 6.x and [npm].
+
 Origami Service Makefile provides a set of common tools that are required for building and running Origami services. To use the Makefile, copy the [`boilerplate.mk`](boilerplate.mk) file to the root of your repo and name it `Makefile`:
 
 ```sh
@@ -37,6 +39,7 @@ You should now be able to run the following commands:
 
 ```
 make install       # Install application dependencies
+make .env          # Update the .env file with environment variables from Vault
 make verify        # Verify code using static analysis
 make test          # Run unit and integration tests
 make run           # Run the application as if in production

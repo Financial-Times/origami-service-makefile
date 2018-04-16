@@ -2,7 +2,7 @@
 # Meta tasks
 # ----------
 
-.PHONY: test
+.PHONY: test .env
 
 
 # Configuration
@@ -10,7 +10,6 @@
 
 # Import environment variables if an .env file is present
 ifneq ("$(wildcard .env)","")
-sinclude .env
 export $(shell [ -f .env ] && sed 's/=.*//' .env)
 $(info Note: importing environment variables from .env file)
 endif
@@ -18,6 +17,10 @@ endif
 # Set up the npm binary path
 NPM_BIN = ./node_modules/.bin
 export PATH := $(PATH):$(NPM_BIN)
+
+ifneq ("$(wildcard node_modules/@financial-times/origami-service-makefile/index.mk)","")
+PATH_TO_SERVICE_MAKEFILE := node_modules/@financial-times/origami-service-makefile/
+endif
 
 
 # Output helpers
@@ -35,6 +38,15 @@ ci: verify test whitesource
 
 # Install tasks
 # -------------
+
+# Update the .env file with secrets from Vault (https://github.com/Financial-Times/vault/wiki/)
+.env:
+	@if [[ -z "$(shell command -v vault)" ]]; then echo "Error: You don't have Vault installed. Follow the guide at https://github.com/Financial-Times/vault/wiki/Getting-Started"; exit 1; fi
+	@if [[ -z "$(shell find ~/.vault-token -mmin -480)" ]]; then echo "Error: You are not logged into Vault. Try vault auth --method github."; exit 1; fi
+	@if [[ -z "$(shell grep .env .gitignore)" ]]; then echo "Error: .gitignore must include .env"; exit 1; fi
+	@if [[ "$(shell grep .env .npmignore --silent --no-messages; echo $$?)" -eq 1 ]]; then echo "Error: .npmignore must include .env"; exit 1; fi
+	@SERVICE_SYSTEM_CODE=$(SERVICE_SYSTEM_CODE) REGION=$(REGION) node $(PATH_TO_SERVICE_MAKEFILE)lib/vault.js
+	@$(TASK_DONE)
 
 # Clean the Git repository
 clean:
