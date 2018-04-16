@@ -18,9 +18,7 @@ endif
 NPM_BIN = ./node_modules/.bin
 export PATH := $(PATH):$(NPM_BIN)
 
-ifeq ("$(wildcard node_modules/@financial-times/origami-service-makefile/index.mk)","")
-PATH_TO_SERVICE_MAKEFILE :=
-else
+ifneq ("$(wildcard node_modules/@financial-times/origami-service-makefile/index.mk)","")
 PATH_TO_SERVICE_MAKEFILE := node_modules/@financial-times/origami-service-makefile/
 endif
 
