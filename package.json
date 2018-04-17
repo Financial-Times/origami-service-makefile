@@ -17,5 +17,8 @@
   "main": "index.mk",
   "devDependencies": {
     "npm-prepublish": "^1.2.2"
+  },
+  "dependencies": {
+    "esm": "^3.0.18"
   }
 }
