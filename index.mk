@@ -190,7 +190,7 @@ auto-version:
 
 # Update all CMDB endpoints
 cmdb-update:
-	@if [ -d operational-documentation ]; then make cmdb-checks cmdb-update-eu cmdb-update-us cmdb-update-runbook && $(TASK_DONE); fi
+	@if [ -d operational-documentation ]; then make cmdb-checks && echo "Skipping CMDB update. The CMDB API is decommissioned in favor of the new BIZ-OPS API. https://github.com/Financial-Times/origami-service-makefile/issues/20" && $(TASK_DONE); fi
 
 # Update the CMDB endpoint for the EU application
 cmdb-update-eu:
