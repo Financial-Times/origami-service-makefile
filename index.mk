@@ -30,7 +30,7 @@ TASK_DONE = echo "✓ $@ done"
 # -----------
 
 all: install ci
-ci: verify test whitesource
+ci: verify test
 
 
 # Install tasks
@@ -271,8 +271,4 @@ grafana-checks:
 
 # Verify security and licensing of production dependencies
 whitesource:
-	@if [ -f "$(whitesource.config.json)" ]; then \
-		echo "Warning: whitesource.config.json file not found, skipping running whitesource"; \
-	else \
-		npx -p whitesource@^1 whitesource run; \
-	fi
+	echo "Whitesource is no longer supported, migrate to Synk instead."; \
