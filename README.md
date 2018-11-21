@@ -49,7 +49,6 @@ make cmdb-update   # Update CMDB endpoints for the application
 make release-log   # Create a release log for the application in Salesforce
 make grafana-pull  # Pull changes from the Grafana dashboard
 make grafana-push  # Push changes to the Grafana dashboard
-make whitesource   # Verify security and licensing of production dependencies
 ```
 
 
@@ -84,7 +83,6 @@ These configurations must never appear in your source code, and so should be set
   - `CMDB_API_KEY`: The API key to use when performing CMDB operations
   - `RELEASE_LOG_API_KEY`: The change request API key to use when creating and closing release logs
   - `GRAFANA_API_KEY`: The API key to use when performing Grafana operations
-  - `WHITESOURCE_API_KEY`: The API key to use when testing dependencies with Whitesource
   - `GITHUB_RELEASE_USER`: The user who will create releases on GitHub for repositories which use the auto-version task. This user must have write access to `GITHUB_RELEASE_REPO`
   - `GITHUB_RELEASE_TOKEN`: A token for `GITHUB_RELEASE_USER` which has `repo` level access
 
