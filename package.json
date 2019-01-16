@@ -16,6 +16,6 @@
   },
   "main": "index.mk",
   "dependencies": {
-    "esm": "^3.0.18"
+    "esm": "^3.1.0"
   }
 }
