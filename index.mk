@@ -99,7 +99,7 @@ test: test-unit-coverage verify-coverage test-integration
 
 # Run the unit tests using mocha
 test-unit:
-	@if [ -d test/unit ]; then mocha "test/unit/**/*.test.js" --recursive && $(TASK_DONE); fi
+	@if [ -d test/unit ]; then mocha "test/unit/**/*.test.js" --recursive ${CI:+--forbid-only} && $(TASK_DONE); fi
 
 # Run the unit tests using mocha and generating
 # a coverage report if nyc or istanbul are installed
@@ -118,7 +118,7 @@ test-unit-coverage:
 
 # Run the integration tests using mocha
 test-integration:
-	@if [ -d test/integration ]; then mocha "test/integration/**/*.test.js" --recursive --timeout $(INTEGRATION_TIMEOUT) --slow $(INTEGRATION_SLOW) $(INTEGRATION_FLAGS) && $(TASK_DONE); fi
+	@if [ -d test/integration ]; then mocha "test/integration/**/*.test.js" --recursive ${CI:+--forbid-only} --timeout $(INTEGRATION_TIMEOUT) --slow $(INTEGRATION_SLOW) $(INTEGRATION_FLAGS) && $(TASK_DONE); fi
 
 
 # Service running tasks
